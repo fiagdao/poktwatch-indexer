@@ -1,0 +1,1 @@
+let txs = window.claims

@@ -1,0 +1,624 @@
+<!doctype html>
+<html lang="en">
+
+{%load static%}
+{% load mathfilters %}
+
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XVL33KMXQF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-XVL33KMXQF');
+  </script>
+  <title>
+    Pokt Block Details | poktwatch
+  </title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="Description"
+    content="Pokt detailed block info for {{height}} . All block details are shown" />
+  <meta name="author" content="poktwatch.io" />
+  <meta name="keywords" content="Pokt, explorer, pocket, search, blockchain, crypto, currency" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta property="og:title" content="Pokt Block Details | poktwatch" />
+  <meta property="og:description"
+    content="Pokt detailed block info for block {{height}}. The Block status, block confirmation, gas fee, and token transfer are shown." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Pokt Blockchain Explorer" />
+  <meta property="og:url" content="http://poktwatch.io/block/{{height}}" />
+  <meta property="og:image" content="{%static 'images/pokt-logo.svg'%}" />
+  <meta property="og:image:url" content="{%static 'images/pokt-logo.svg'%}" />
+  <meta property="og:image:alt" content="Visit poktwatch.io" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Pokt Block Details | poktwatch" />
+  <meta property="twitter:description"
+    content="Pokt detailed block info for {{height}} . All block details are shown" />
+  <meta name="twitter:site" content="@poktwatch" />
+  <meta property="twitter:image" content="{%static 'images/'%}" />
+  <link rel="shortcut icon" href="/images/favicon3.ico" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-46998878-6"></script>
+  <link rel="stylesheet" href="{% static '/assets/vendor/font-awesome/css/fontawesome-all.min.css' %}">
+  <link rel="stylesheet" href="{% static '/assets/vendor/animate.css/animate.min.css' %}">
+  <link rel="stylesheet" href="{% static '/assets/vendor/hs-megamenu/src/hs.megamenu.css' %}">
+  <link rel="stylesheet" href="{% static '/assets/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css' %}">
+  <link rel="stylesheet" href="{% static '/assets/vendor/select2/dist/css/select2.min.css' %}">
+  <link rel="stylesheet" href="{% static '/assets/css/theme.min.css' %}">
+  <link rel="stylesheet" href="{% static '/assets/css/custom.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+  <script src="{% static '/assets/vendor/jquery/dist/jquery.min.js' %}"></script>
+  <script type="text/javascript" src="{% static '/jss/blockies.js' %}"></script>
+  <style>
+    .ui-autocomplete {
+      position: absolute;
+      top: 0;
+      left: 0;
+      cursor: default
+    }
+
+    .ui-state-active {
+      border-color: #e7eaf3;
+      background: #f8fafd;
+    }
+
+    body.dark-mode .ui-state-active {
+      background-color: #132a47;
+      border-color: #18365b;
+    }
+  </style>
+  <style>
+    .card-header.sticky-card-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .zoom {
+      padding: 0px;
+      background-color: #ECF0F1;
+      transition: transform .3s;
+      width: 65px;
+      height: 65px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .zoom:hover {
+      -ms-transform: scale(1.5);
+      -webkit-transform: scale(1.5);
+      transform: scale(1.5);
+      padding-top: 5px;
+    }
+
+    .scrollbox {
+      overflow-y: auto;
+      max-height: 170px;
+      font-size: small;
+      font-family: monospace;
+      background-clip: padding-box;
+      border: 1px solid #d5dae2;
+      border-radius: .25rem;
+      transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    }
+
+    body.dark-mode .scrollbox {
+      border-color: #013558 !important;
+    }
+
+    .tooltip-inner {
+      max-width: 290px;
+    }
+
+    body.dark-mode .normalMode {
+      display: none;
+    }
+
+    body:not(.dark-mode) .normalMode {
+      display: inline;
+    }
+
+    body.dark-mode .darkmode {
+      display: inline;
+    }
+
+    body:not(.dark-mode) .darkmode {
+      display: none;
+    }
+  </style>
+  <style>
+    @media (min-width: 768px) {
+      .hash-tag-custom-from-int {
+        width: 0px;
+        max-width: 132px !important
+      }
+
+      .hash-tag-custom-to-int {
+        width: 0px;
+        max-width: 132px !important
+      }
+    }
+  </style>
+  <style>
+    @media (min-width: 768px) {
+      .hash-tag-custom-from {
+        width: 0px;
+        max-width: 132px !important
+      }
+
+      .hash-tag-custom-to {
+        width: 0px;
+        max-width: 132px !important
+      }
+    }
+  </style>
+  <style>
+    @media (min-width: 768px) {
+      .hash-tag-custom-from-721 {
+        width: 0px;
+        max-width: 132px !important
+      }
+
+      .hash-tag-custom-to-721 {
+        width: 0px;
+        max-width: 132px !important
+      }
+    }
+  </style>
+  <style>
+    @media (min-width: 768px) {
+      .hash-tag-custom-from-1155 {
+        width: 0px;
+        max-width: 132px !important
+      }
+
+      .hash-tag-custom-to-1155 {
+        width: 0px;
+        max-width: 132px !important
+      }
+    }
+  </style>
+  <style type="text/css">
+    #div-advert {
+      line-height: 1.7
+    }
+
+    @media (max-width: 667px) {
+      #div-advert {
+        min-height: 62px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      #div-advert {
+        padding-bottom: 20px;
+      }
+    }
+  </style>
+  <script>
+    function resizeIframe(obj) {
+      obj.style.height = 0;
+      obj.style.height = (obj.contentWindow.document.body.scrollHeight + 100) + 'px';
+    }
+  </script>
+  <script async src='/cdn-cgi/bm/cv/669835187/api.js'></script>
+</head>
+
+<body id="body">
+  <div class="wrapper">
+    <header id="header" class="u-header">
+      <div class="u-header__section ">
+        <div id="logoAndNav" class="container">
+          <nav class="js-mega-menu navbar navbar-expand-md u-header__navbar u-header__navbar--no-space">
+            <div class="w-lg-auto">
+              <a class="navbar-brand  pt-md-0" href="/" target="_parent" aria-label="poktwatch">
+                <img id="logo-header" width="160" src="{% static '/images/pokt.svg' %}" alt="poktwatch Logo">
+              </a>
+              <div id="ethPrice">
+                <div class="d-none d-md-inline-block u-label u-label--price rounded mt-1 ml-n1 text-nowrap">
+                  <span class="text-dark">Pokt: ${{price}}</span></a>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <button type="button" class="navbar-toggler btn u-hamburger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navBar" data-toggle="collapse" data-target="#navBar">
+                <span id="hamburgerTrigger" class="u-hamburger__box">
+                  <span class="u-hamburger__inner"></span>
+                </span>
+              </button>
+            </div>
+            <div class="d-flex flex-column w-100">
+              <div id="navBar" class="collapse navbar-collapse u-header__navbar-collapse order-md-2">
+                <ul class="navbar-nav u-header__navbar-nav px-2 px-md-0">
+                  <li id="LI_default" class="nav-item u-header__nav-item" data-event="hover" data-animation-in="slideInUp" data-animation-out="fadeOut">
+                    <a class="nav-link u-header__nav-link" href="/" aria-haspopup="true" aria-expanded="false" aria-labelledby="pagesSubMenu">Home</a>
+                  </li>
+                </ul>
+              </div>
+              <div id="form1">
+                <form class="w-100 w-lg-60 order-md-1 ml-md-auto mt-2 mb-2 mb-md-0" action="/search" method="GET" autocomplete="off" spellcheck="false">
+                  <div class="input-group input-group-sm">
+                    <input type="text" class="form-control searchautocomplete" autocomplete="off" spellcheck="false" id="txtSearchInput" name="q" placeholder="Search by Address / Txn Hash / Block / Token"
+                      aria-label="Search by Address / Txhash / Block / Token" aria-describedby="button-header-search" onkeyup="handleSearchText(this);" maxlength="68">
+                    <input type="hidden" value="" id="hdnSearchText" />
+                    <input type="hidden" value="" id="hdnSearchLabel" />
+                    <input id="hdnIsTestNet" value="False" type="hidden" />
+                    <div class="input-group-append">
+                      <button class="btn btn-primary" type="submit">
+                        <span class="fas fa-search"></span>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </header>
+    <main id="content" role="main">
+
+      <div class="container py-3 mn-b3">
+
+        <div class="d-lg-flex justify-content-between align-items-center">
+          <div class="mb-3 mb-lg-0">
+            <h1 class="h4 mb-0">Block Details </h1>
+          </div>
+        </div>
+      </div>
+      <div class="container space-bottom-2">
+        <div class="card">
+
+          <div class="card-header sticky-card-header d-flex justify-content-between p-0">
+
+            <ul class="nav nav-custom nav-borderless nav_tabs1" id="nav_tabs" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" aria-controls="home" aria-selected="true" onclick="javascript:updatehash('');">Overview</a>
+              </li>
+            </ul>
+          </div>
+
+
+          <div class="tab-content" id="myTabContent">
+
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+              <div id="ContentPlaceHolder1_maintable" class="card-body">
+
+                <div class="row align-items-center  mt-1">
+                  <div class="col-md-3 font-weight-bold font-weight-sm-normal mb-1 mb-md-0e"><i class="fal fa-question-circle text-secondary mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title=""
+                      data-content="Also known as Block Number. The block height, which indicates the length of the blockchain, increases after the addition of the new block."></i>Block Height:</div>
+                  <div class="col-md-9">
+                    <div class="d-flex">
+                      <span class="font-weight-sm-bold mr-2">
+                        {{height}}</span>
+                    </div>
+                  </div>
+                </div>
+
+
+                <hr class="hr-space">
+
+                <div class="row align-items-center">
+                  <div class="col-md-3 font-weight-bold font-weight-sm-normal mb-1 mb-md-0e"><i class="fal fa-question-circle text-secondary mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title=""
+                      data-content="The date and time at which a block is mined."></i>Timestamp:</div>
+                  <div class="col-md-9">
+                    <i class="far fa-clock small mr-1"></i>{{time}}
+                    <script>
+                      document.querySelector('#ContentPlaceHolder1_maintable > div:nth-child(3) > div.col-md-9').innerText = new Date(document.querySelector('#ContentPlaceHolder1_maintable > div:nth-child(3) > div.col-md-9').innerText)
+                    </script>
+                  </div>
+                </div>
+
+
+                <hr class="hr-space">
+
+                <div class="row align-items-center mt-1">
+                  <div class="col-md-3 font-weight-bold font-weight-sm-normal mb-1 mb-md-0"><i class='fal fa-question-circle text-secondary d-sm-inline-block mr-1' data-container='body' data-toggle='popover' data-placement='top'
+                      data-original-title='' title='' data-content='The number of transactions in a block.'></i>
+                    Txs:</div>
+                  <div class="col-md-9">
+                    <span id='spanTxHash' class='mr-1'>{{txs}}</span>
+                  </div>
+                </div>
+
+
+                <hr class="hr-space">
+
+                <div class="row align-items-center">
+                  <div class="col-md-3 font-weight-bold font-weight-sm-normal mb-1 mb-md-0e"><i class="fal fa-question-circle text-secondary mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title=""
+                      data-content="Node who successfully included the block onto the blockchain."></i>Proposed by:</div>
+                  <div class="col-md-9">
+                    <a href="/address/{{proposer}}">{{proposer}}</a>
+                  </div>
+                </div>
+
+
+                <hr class="hr-space">
+
+                <div class="row align-items-center">
+                  <div class="col-md-3 font-weight-bold font-weight-sm-normal mb-1 mb-md-0e"><i class="fal fa-question-circle text-secondary mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title=""
+                      data-content="The block size is actually determined by the block's gas limit."></i>Relays :</div>
+                  <div class="col-md-9">
+                    {{relays}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </main>
+    <div id="push"></div>
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="emailSubscribeModalBox" aria-hidden="true">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <button type="button" class="close close-md" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="text-center py-5-alt px-4">
+              <div id="emailSubscribeModalBoxText"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="bg-dark py-4">
+    <div class="container">
+      <div class="row justify-content-md-between font-size-1 py-2" style="background: url({% static '/world-map-white.png'%}) no-repeat 0 30%;">
+        <div class="col-lg-3 mb-4 mb-lg-0">
+          <div class="d-flex h-100 flex-column">
+            <div class="d-flex align-items-center mb-4">
+              <img width="20" src="{% static 'images/pokt.svg'%}" alt="POKT Logo">
+              <span class="h4 text-white mb-0 ml-3">Powered by POKT</span>
+            </div>
+            <p class="text-white">poktwatch is a Block Explorer and Analytics Platform for POKT, a decentralized node platform</p>
+
+            <div class="d-flex align-items-center">
+              <button id="darkModaBtn" type="button" data-toggle="tooltip" data-title="Day/Night Mode" class="btn btn-sm btn-icon btn-soft-light">
+                <i id="darkModaBtnIcon" Class="fa fa-moon"></i></button>
+            </div>
+
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 mb-4 mb-lg-0">
+          <h4 class="h6 text-white heading-border">Company</h4>
+          <ul class="list-group list-group-sm list-group-transparent list-group-white list-group-flush list-group-borderless mb-0">
+            <!-- <li><a class="list-group-item" href="/contactus">Contact Us</a></li> -->
+            <li><a class="list-group-item" href="https://t.me/p1errre">DM Me</a></li>
+
+          </ul>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 mb-4 mb-lg-0">
+          <h4 class="h6 text-white heading-border">Products & Services</h4>
+          <ul class="list-group list-group-sm list-group-transparent list-group-white list-group-flush list-group-borderless mb-0">
+            <li><a class="list-group-item" href="https://t.me/p1errre">Advertise</a></li>
+          </ul>
+        </div>
+      </div>
+      <hr class="opacity-md">
+      <div class="row justify-content-between align-items-center font-size-1">
+        <div class="col-md-6 mb-2 mb-md-0">
+          <p class="mb-0 text-white">poktwatch © 2021 (A1)&nbsp; | &nbsp;<a class="text-white-70" href="/address/bd13f5f67af26b62650380bc21870aab6b638cdc">Donate</a> <i class="fas fa-heart text-danger"></i></p>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+  <div id="divcookie" class="fixed-bottom mx-3" style="display: none;">
+    <div class="alert alert-light border shadow-sm p-3" role="alert">
+      <div class="d-flex justify-content-center align-items-center">
+        <span>
+          <p class="text-dark mr-3 mb-2 mb-md-0">
+            <i class="far fa-cookie-bite text-secondary mr-1"></i>This website <a href='/terms#cookiestatement' target='_blank'>uses cookies to improve your experience</a> and has an updated <a href='/privacyPolicy' target='_blank'>Privacy
+              Policy</a>.
+          </p>
+        </span>
+        <div>
+          <button id="btnCookie" class="btn btn-sm btn-primary text-nowrap py-1" data-dismiss="alert" aria-label="Close">Got It</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a class="js-go-to u-go-to" href="#" data-position='{"bottom": 20, "right": 15 }' data-type="fixed" data-offset-top="400" data-compensation="#header" data-show-effect="slideInUp" data-hide-effect="slideOutDown">
+    <span class="fa fa-arrow-up u-go-to__inner"></span>
+  </a>
+  <script src="{% static '/assets/vendor/jquery-ui/jquery-ui.min.js' %}"></script>
+  <script src="{% static '/assets/vendor/jquery-migrate/dist/jquery-migrate.min.js' %}"></script>
+  <script src="{% static '/assets/vendor/popper.js/dist/umd/popper.min.js' %}"></script>
+  <script src="{% static '/assets/vendor/bootstrap/bootstrap.min.js' %}"></script>
+
+  <script src="{% static '/assets/vendor/hs-megamenu/src/hs.megamenu.js' %}"></script>
+  <script src="{% static '/assets/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+  <script src="{% static '/assets/vendor/cubeportfolio/js/jquery.cubeportfolio.min.js' %}"></script>
+
+  <script src="{% static '/assets/js/hs.core.js' %}"></script>
+  <script src="{% static '/assets/js/components/hs.header.js' %}"></script>
+  <script src="{% static '/assets/js/components/hs.unfold.js' %}"></script>
+  <script src="{% static '/assets/js/components/hs.malihu-scrollbar.js' %}"></script>
+  <script src="{% static '/assets/js/components/hs.focus-state.js' %}"></script>
+  <script src="{% static '/assets/js/components/hs.go-to.js' %}"></script>
+  <script src="{% static '/assets/js/components/hs.cubeportfolio.js' %}"></script>
+  <script src="{% static '/assets/js/custom/combine-js-bottom2.js' %}"></script>
+
+  <script>
+    $(window).on('load', function() {
+      // initialization of HSMegaMenu component
+      $('.js-mega-menu').HSMegaMenu({
+        event: 'hover',
+        pageContainer: $('.container'),
+        breakpoint: 767.98,
+        hideTimeOut: 0
+      });
+      myfn_subscribeNewsletter.startFn("#btnSubscribeNewsletter", "#signupSrEmail")
+    });
+
+    $(document).on('ready', function() {
+      // initialization of header
+      $.HSCore.components.HSHeader.init($('#header'));
+
+      // initialization of unfold component
+      $.HSCore.components.HSUnfold.init($('[data-unfold-target]'), {
+        afterOpen: function() {
+          $(this).find('input[type="search"]').focus();
+        }
+      });
+
+      // initialization of malihu scrollbar
+      $.HSCore.components.HSMalihuScrollBar.init($('.js-scrollbar'));
+
+      // initialization of focus state
+      $.HSCore.components.HSFocusState.init();
+
+      // initialization of go to
+      $.HSCore.components.HSGoTo.init('.js-go-to');
+
+      // initialization of cubeportfolio
+      //$.HSCore.components.HSCubeportfolio.init('.cbp');
+    });
+  </script>
+  <script type="text/javascript">
+    var sid = '9b53d84c25b7cd7f3a4f1126df4b7065';
+    var strGlobal = getCookie("etherscan_switch_age_datetime");
+    var strGlobalFee = sessionStorage.getItem("ShowFee");
+    var cookieconsent = getCookie("etherscan_cookieconsent");
+
+
+    if (cookieconsent !== "True") {
+      document.getElementById("divcookie").style.display = "block";
+    };
+
+
+    function getCookie(cname) {
+      var name = cname + "=";
+      var ca = document.cookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) === ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) === 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    }
+    $("#btnCookie").click(function() {
+      $("#divcookie").fadeOut("slow", function() {
+        var d = new Date();
+        d.setTime(d.getTime() + (1095 * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = "etherscan_cookieconsent=True" + ";" + expires + ";path=/";;
+      });
+    });
+
+    function handleSearchText(data) {
+      searchAddress = false;
+      if ($("txtSearchInput").val() == "") {
+        $("#hdnSearchText").val("");
+        $("#hdnSearchLabel").val("");
+      }
+    }
+  </script>
+  <script src="{% static '/assets/vendor/xss.min.js'%}"></script>
+  <script src="{% static '/assets/js/custom/Pokt-abi-encoder.js'%}"></script>
+  <script src="{% static '/assets/vendor/clipboard/dist/clipboard.min.js'%}"></script>
+  <script src="{% static '/assets/js/components/hs.clipboard.js'%}"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      // initialization of clipboard
+      $.HSCore.components.HSClipboard.init('.js-clipboard');
+
+      $('.js-tab-external-link').on('click', function(event) {
+        // Prevent url change
+        event.preventDefault();
+
+        // `this` is the clicked <a> tag
+        $('[data-toggle="tab"][href="' + this.hash + '"]').trigger('click');
+      });
+
+      $('[data-toggle-dynamic=tooltip]').tooltip()
+      $('.collapse').on('show.bs.collapse', function() {
+        $('[data-toggle-dynamic="tooltip"]').tooltip('hide')
+        $('[data-toggle-dynamic="tooltip"]').tooltip('dispose')
+        $('[data-toggle-dynamic=tooltip]').attr('title', 'Click to see less');
+      });
+      $('.collapse').on('shown.bs.collapse', function() {
+        $('[data-toggle-dynamic=tooltip]').tooltip()
+      });
+
+      $('.collapse').on('hide.bs.collapse', function() {
+        $('[data-toggle-dynamic="tooltip"]').tooltip('hide')
+        $('[data-toggle-dynamic="tooltip"]').tooltip('dispose')
+        $('[data-toggle-dynamic=tooltip]').attr('title', 'Click to see more');
+      });
+      $('.collapse').on('hidden.bs.collapse', function() {
+        $('[data-toggle-dynamic=tooltip]').tooltip()
+      });
+    });
+  </script>
+  <script src="/jss/jquery.countdown.min.js"></script>
+  <script src="/assets/js/custom/bignumber.min.js"></script>
+  <script type="text/javascript" src="/assets/js/custom/txpage.js"></script>
+  <script type="text/javascript">
+    $('.tooltip-address').on('inserted.bs.tooltip', function() {
+      $("body div.tooltip-inner").css("max-width", "290px");
+    });
+
+    window.mode = 'normal';
+    var litTxHash = "0xe473c6ee0b2a14c9d97655d1c73084ee3b8c3b1db3454ffd2c4bfd03440706bb";
+
+    function btnDecodeClick() {
+      $("#rawtab").hide();
+      document.getElementById("decodetab").removeAttribute("style");
+      $("#decodetab").show();
+    }
+
+    function btnSwitchClick() {
+      $("#decodetab").hide();
+      $("#rawtab").show();
+    }
+
+    //-- begin code for checking for disqus comments---
+    var blnCheckDisqusCount = false;
+    if (blnCheckDisqusCount == true) {
+      checkdisquscomment();
+    }
+
+    function checkdisquscomment() {
+      $.ajax({
+        type: 'Get',
+        url: '/datahandler.ashx',
+        data: {
+          t: 'disqcommentchck',
+          id: disqus_title,
+          type: 'tx'
+        },
+        success: function(res) {
+          console.log("checkdisquscomment res=" + res);
+          if (res == 1) {
+            document.getElementById("commentindicator").innerHTML = "<sup><i class='fas fa-circle text-success ml-1' title='There are comment(s) for this item'></i></sup>"
+          }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {}
+      });
+    }
+    //-- End code for checking for disqus comments---
+  </script>
+  <script type="text/javascript">
+    (function() {
+      window['__CF$cv$params'] = {
+        r: '6a3f23ee69510bb2',
+        m: 'ykSjPYuEMECHcMH4fNf3fqJb6lacwW.b46w9b6B2DaY-1635203658-0-AcJSWPQjFLTQrYGjy9o/y4yvfiwJj47NN5j5H9+tnYmdHVa8BwSGbI3PnTtKdJsde06EatFqOQNDNyAOxRWW2tvJMnLS1rwqbXbgqfoTjHVjxlvPIL/lWE9ksl2vIgktultwdDhwul3wtWVAP2hqyw7haKjc1qtIH+U8b/iGGlS8bCcgaPI/Us/sCzVtOVVGcOfsnNx+LsGAvifJwSjEpEs=',
+        s: [0x58111f1121, 0x25f6a07f2f],
+      }
+    })();
+  </script>
+</body>
+
+</html>

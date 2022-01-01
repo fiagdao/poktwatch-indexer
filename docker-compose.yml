@@ -1,0 +1,52 @@
+version: '3.7'
+
+services:
+  pocket:
+    build: ./pocket/
+    ports:
+    - "8081:8081"
+    - "26656:26656"
+    - "26657:26657"
+    volumes:
+    - "./data/.pocket/:/root/.pocket/"
+  db:
+    image: postgres
+    env_file:
+      - .env
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    logging:
+      driver: none
+  django_gunicorn:
+    volumes:
+      - .:/app
+      - static:/static
+    env_file:
+      - .env
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    logging:
+      driver: none
+  nginx:
+    build: ./nginx
+    volumes:
+      - static:/static
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - django_gunicorn
+  indexer:
+    build: ./backend
+    env_file:
+      - .env
+    depends_on:
+      - pocket
+      - db
+volumes:
+  static:
+
