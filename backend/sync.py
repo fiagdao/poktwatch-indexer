@@ -29,7 +29,7 @@ print("in sync file")
 #
 # # connection =psycopg2.connect(database='Transaction')
 # c = connection.cursor()
-time.sleep(15)
+time.sleep(30)
 node = Pokt('pocket:8081')
 print(node.block_txs(1000),flush=True)
 print("after POKT node init",flush=True)
@@ -118,7 +118,7 @@ while True:
 	print(currHeight,tarHeight,flush=True)
 	if tarHeight > currHeight:
 		if tarHeight-1==currHeight:
-			# syncMempool()
+			syncMempool()
 			time.sleep(20)
 		else:
 			pass
