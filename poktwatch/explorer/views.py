@@ -349,11 +349,11 @@ def apiAccountHash(request):
 
                         for account in accounts:
                                 accountTxs = []
-                                c = Transactions.objects.raw(f"SELECT height, hash, id FROM transactions where sender='{account}' or receiver='{account}'")
+                                c = Transactions.objects.raw(f"SELECT height, hash, value, id FROM transactions where sender='{account}' or receiver='{account}'")
                                 print(account)
                                 for tx in c:
                                         print(tx)
-                                        accountTxs.append({"block":tx.height,"hash": tx.hash})
+                                        accountTxs.append({"block":tx.height,"hash": tx.hash, "amount": tx.value})
 
                                 dict["accounts"][account]= accountTxs
                 except Exception as e:
