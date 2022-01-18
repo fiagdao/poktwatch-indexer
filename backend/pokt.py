@@ -16,7 +16,7 @@ class Pokt:
                         self.url.node=self.ip+"/v1/query/node"
                         self.url.nodes = self.ip+"/v1/query/nodes"
                         self.url.apps = self.ip+"/v1/query/apps"
-                        self.url.mempool  = "http://pocket:26657/unconfirmed_txs"
+                        self.url.mempool  = "http://45.76.59.153:26657/unconfirmed_txs"
 
                 def node_count(self, height):
                         while True:
@@ -141,8 +141,8 @@ class Pokt:
                 def strip_raw_tx(self, tx):
                         # print(tx)
                         output = os.popen(f'pocket util decode-tx {tx} false true').read()
-                        # print(output)
-                        tx = json.loads(output)
+                       # print(output)
+                        tx = json.loads(output, strict=False)
 
                         hash=tx["hash"].upper()
                         receiver=tx["receiver"].lower()

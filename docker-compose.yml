@@ -35,6 +35,7 @@ services:
     build: ./nginx
     volumes:
       - static:/static
+      - "./letsencrypt:/etc/letsencrypt"
     ports:
       - "80:80"
       - "443:443"

@@ -18,7 +18,7 @@
         "FilterPeers": false,
         "RPC": {
             "RootDir": "/home/app/.pocket",
-            "ListenAddress": "tcp://0.0.0.0:26655",
+            "ListenAddress": "tcp://0.0.0.0:26657",
             "CORSAllowedOrigins": [],
             "CORSAllowedMethods": [
                 "HEAD",
@@ -124,7 +124,7 @@
         "session_db_name": "session",
         "evidence_db_type": "cleveldb",
         "evidence_db_name": "pocket_evidence",
-        "tendermint_uri": "tcp://0.0.0.0:26655",
+        "tendermint_uri": "tcp://localhost:26657",
         "keybase_name": "pocket-keybase",
         "rpc_port": "8081",
         "client_block_sync_allowance": 999999,
