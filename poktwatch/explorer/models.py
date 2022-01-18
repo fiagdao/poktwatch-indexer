@@ -54,6 +54,7 @@ class Transactions(models.Model):
     index = models.IntegerField(blank=True, null=True)
     code = models.IntegerField(blank=True, null=True)
     memo = models.TextField(blank=True, null=True)
+    timestamp = models.DateTimeField()
 
     class Meta:
         managed = False

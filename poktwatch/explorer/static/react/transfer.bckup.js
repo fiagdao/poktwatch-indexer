@@ -1,6 +1,5 @@
 let txs = window.transfers;
 
-
 function Failed(props) {
   console.log('test')
   if (props.code!=0 && props.code!=-1) {
@@ -63,30 +62,6 @@ function Sender(props) {
   }
 }
 
-const intervals = [
-  { label: 'year', seconds: 31536000 },
-  { label: 'month', seconds: 2592000 },
-  { label: 'day', seconds: 86400 },
-  { label: 'hour', seconds: 3600 },
-  { label: 'minute', seconds: 60 },
-  { label: 'second', seconds: 1 }
-];
-
-function timeSince(date) {
-  const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
-  const interval = intervals.find(i => i.seconds < seconds);
-  const count = Math.floor(seconds / interval.seconds);
-  return `${count} ${interval.label}${count !== 1 ? 's' : ''} ago`;
-}
-
-function Age(props) {
-	let a = new Date(props.time)
-	return (
-		<td className="showAge "><span rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="{props.time}">{timeSince(a)}</span></td>
-	)
-
-}
-
 function Direction(props) {
   if (props.receiver==props.address || props.type=="claim") {
     return (
@@ -138,7 +113,6 @@ function Transaction(props) {
       <Hash hash={props.hash} code={props.code}/>
       <Method type={props.type} />
       <Block height={props.height} />
-      <Age time={props.time} />
       <Sender type={props.type} sender={props.sender} />
       <Direction receiver={props.receiver} address={props.address} type={props.type} />
       <Receiver receiver={props.receiver} />
@@ -150,11 +124,10 @@ function Transaction(props) {
 function Transactions() {
   return (
       txs.map((value,index) => {
-        return <Transaction hash={value.fields.hash} type={value.fields.type} height={value.fields.height} time={value.fields.timestamp} sender={value.fields.sender} address={window.address} receiver={value.fields.receiver} value={value.fields.value} code={value.fields.code} />;
+        return <Transaction hash={value.fields.hash} type={value.fields.type} height={value.fields.height} sender={value.fields.sender} address={window.address} receiver={value.fields.receiver} value={value.fields.value} code={value.fields.code} />;
       })
   );
 }
-
 
 ReactDOM.render(
   <Transactions />,
