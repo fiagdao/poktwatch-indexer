@@ -106,7 +106,7 @@ node = poktNode(ip='207.148.2.112:8081')
 
 def get_price():
 	try:
-		price= round(float(requests.get('https://thunderheadotc.com/api/price/', verify=False).json()["price"]),2)
+		price= round(float(requests.get('https://api.coingecko.com/api/v3/simple/price?ids=pocket-network&vs_currencies=usd').json()["pocket-network"]["usd"]),2)
 	except:
 		price = "N/A"
 	return price

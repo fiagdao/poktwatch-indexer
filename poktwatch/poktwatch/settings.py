@@ -26,7 +26,7 @@ SECRET_KEY = 'si+pj1e*xir)-p1v0_##^w6)n$p)sc(0v9dvl6-(ts&0w&qsaa'
 #SECRET_KEY = os.getenv('SECRET_KEY')
 #DEBUG = os.getenv('DEBUG')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 #SECURE_SSL_REDIRECT = False
 ALLOWED_HOSTS = ["*"]
 #ALLOWED_HOSTS = ["poktwatch.io",  "http://www.poktwatch.io/", "https://www.poktwatch.io/", "www.poktwatch.io"]

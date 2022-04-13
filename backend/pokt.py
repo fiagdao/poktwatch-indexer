@@ -1,6 +1,7 @@
 import requests
 import json
 import os
+import time
 
 class Pokt:
                 class url:
@@ -16,7 +17,7 @@ class Pokt:
                         self.url.node=self.ip+"/v1/query/node"
                         self.url.nodes = self.ip+"/v1/query/nodes"
                         self.url.apps = self.ip+"/v1/query/apps"
-                        self.url.mempool  = "http://45.76.59.153:26657/unconfirmed_txs"
+                        self.url.mempool  = "http://pocket:26657/unconfirmed_txs"
 
                 def node_count(self, height):
                         while True:
@@ -27,8 +28,10 @@ class Pokt:
                                                 return 0
                                         return len(nodes)
                                 except Exception as e:
-                                        print(e, flush=True)
+                                        time.sleep(10)
+                                        print("node count error", e, flush=True)
                                         pass
+                                return 29659
 
 
                 def app_count(self, height):

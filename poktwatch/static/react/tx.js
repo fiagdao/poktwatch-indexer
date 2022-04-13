@@ -63,6 +63,45 @@ function Sender(props) {
   }
 }
 
+
+function timeSince(date) {
+
+  var seconds = Math.floor((new Date() - date) / 1000);
+
+  var interval = seconds / 31536000;
+
+  if (interval > 1) {
+    return Math.floor(interval) + " years";
+  }
+  interval = seconds / 2592000;
+  if (interval > 1) {
+    return Math.floor(interval) + " months";
+  }
+  interval = seconds / 86400;
+  if (interval > 1) {
+    return Math.floor(interval) + " days";
+  }
+  interval = seconds / 3600;
+  if (interval > 1) {
+    return Math.floor(interval) + " hours";
+  }
+  interval = seconds / 60;
+  if (interval > 1) {
+    return Math.floor(interval) + " minutes";
+  }
+  return Math.floor(seconds) + " seconds";
+}
+
+function Age(props) {
+	let a = new Date(props.time)
+  a.setHours(a.getHours()-6)
+  console.log(a)
+	return (
+		<td className="showAge "><span rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="{{props.time}}">{moment.utc(a).local().fromNow()}</span></td>
+	)
+
+}
+
 function Direction(props) {
   if (props.receiver==props.address || props.type=="claim") {
     return (
@@ -114,6 +153,7 @@ function Transaction(props) {
       <Hash hash={props.hash} code={props.code}/>
       <Method type={props.type} />
       <Block height={props.height} />
+      <Age time={props.time} />
       <Sender type={props.type} sender={props.sender} />
       <Direction receiver={props.receiver} address={props.address} type={props.type} />
       <Receiver receiver={props.receiver} />
@@ -125,7 +165,7 @@ function Transaction(props) {
 function Transactions() {
   return (
       txs.map((value,index) => {
-        return <Transaction hash={value.fields.hash} type={value.fields.type} height={value.fields.height} sender={value.fields.sender} address={window.address} receiver={value.fields.receiver} value={value.fields.value} code={value.fields.code} />;
+        return <Transaction hash={value.fields.hash} type={value.fields.type} height={value.fields.height} time={value.fields.timestamp} sender={value.fields.sender} address={window.address} receiver={value.fields.receiver} value={value.fields.value} code={value.fields.code} />;
       })
   );
 }
