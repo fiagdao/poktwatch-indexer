@@ -1,7 +1,6 @@
 from peewee import *
 import os
-#db = PostgresqlDatabase(user="ufo4f7au3ibjir",host="ec2-35-174-58-77.compute-1.amazonaws.com",database="dfj22uqqfkqbam",password="pb77af04be9db1ee75fca22da05007c7b4ce35d282059837afd8735c49b0a42c3",port="5432")
-# db = PostgresqlDatabase(user="u8ubp48c0q5bhm", database="dfj22uqqfkqbam", host="ec2-35-170-124-67.compute-1.amazonaws.com", password="pdfa73ca4ff5e08f37c37d656332e303aa4e5f150734fb8b2c0b3fa344590f4e8", port="5432")
+
 db = PostgresqlDatabase(user=os.environ.get('POSTGRES_USER'), database=os.environ.get('POSTGRES_NAME'), host="db", password=os.environ.get("POSTGRES_PASSWORD"), port="5432")
 class Account(Model):
     address = CharField(max_length=40, null=True)

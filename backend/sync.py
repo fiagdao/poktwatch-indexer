@@ -10,25 +10,7 @@ import dateutil
 from dateutil.parser import *
 headers = {"Content-Type": "application/json", "Accept": "Accept: application/json"}
 print("in sync file")
-# heightURL = 'http://localhost:8081/v1/query/height'
-# tx = 'http://localhost:8081/v1/query/tx'
-# blocktxs= 'http://localhost:8081/v1/query/blocktxs'
-# nodesURL = 'http://localhost:8081/v1/query/nodes'
-# appsURL = 'http://localhost:8081/v1/query/apps'
-# blockURL = 'http://localhost:8081/v1/query/block'
-#
-# host='ec2-35-170-124-67.compute-1.amazonaws.com'
-# database='dfj22uqqfkqbam'
-# user='u8ubp48c0q5bhm'
-# port=5432
-# password='pdfa73ca4ff5e08f37c37d656332e303aa4e5f150734fb8b2c0b3fa344590f4e8'
-#
-# # connection = psycopg2.connect(user="ibclhcjiwsbxnn",host="ec2-3-221-100-217.compute-1.amazonaws.com",database="dbjcte3ojl6ska",password="be5454e4edab439fdc807a97252fffea1fe3917a76aabfbccd823b6239c6295f",port="5432")
-# # connection = psycopg2.connect(user="ufo4f7au3ibjir",host="ec2-35-174-58-77.compute-1.amazonaws.com",database="dfj22uqqfkqbam",password="pb77af04be9db1ee75fca22da05007c7b4ce35d282059837afd8735c49b0a42c3",port="5432")
-# connection = psycopg2.connect(user="u8ubp48c0q5bhm", database="dfj22uqqfkqbam", host="ec2-35-170-124-67.compute-1.amazonaws.com", password="pdfa73ca4ff5e08f37c37d656332e303aa4e5f150734fb8b2c0b3fa344590f4e8", port="5432")
-#
-# # connection =psycopg2.connect(database='Transaction')
-# c = connection.cursor()
+
 time.sleep(30)
 node = Pokt('pocket:8081')
 print(node.block_txs(1000),flush=True)
@@ -139,5 +121,3 @@ while True:
                 #syncMempool()
 
                 time.sleep(10)
-
-

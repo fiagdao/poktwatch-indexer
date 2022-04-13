@@ -102,7 +102,7 @@ class poktNode:
 				nodeVal = "N/A"
 
 			return nodeBal, jailed, public_key, nodeVal
-node = poktNode(ip='207.148.2.112:8081')
+node = poktNode(ip='pocket:8081')
 
 def get_price():
 	try:
