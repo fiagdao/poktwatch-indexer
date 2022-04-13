@@ -2,7 +2,7 @@
 
 docker-compose up -d
 
-there is probably a 75% chance that this won't work first try, so msg me on telegram @p1errre and i'll help you out.
+there is probably a 75% chance that this won't work first try without a little configuration, so msg me on telegram @p1errre and i'll help you out.
 
 
 
