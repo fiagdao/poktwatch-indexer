@@ -81,37 +81,6 @@ WSGI_APPLICATION = 'poktwatch.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'dbjcte3ojl6ska',
-#         'USER': 'ibclhcjiwsbxnn',
-#         'PASSWORD': 'be5454e4edab439fdc807a97252fffea1fe3917a76aabfbccd823b6239c6295f',
-#         'HOST': 'ec2-3-221-100-217.compute-1.amazonaws.com',
-#         'PORT':  5432,
-#     }
-# }
-
-# #standard-0
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#        'NAME': 'poktwatch',
-#        'USER': 'postgres',
-#	'PASSWORD':'ok',        
-#        'HOST': 'localhost',
-#        'PORT':  5432,
-#    },
-#    'thunderhead': {
-#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#        'NAME': 'd2lmlbrc00agoq',
-#        'USER': 'jdddvjrpsrdwhx',
-#        'PASSWORD': 'a5fa1a86c1b64b2cb27eae3d5d812dada351f95d19aee1ba7fb0e5a3015d4763',
-#        'HOST': 'ec2-52-3-130-181.compute-1.amazonaws.com',
-#        'PORT':  5432,
-#    }
-#}
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -122,36 +91,6 @@ DATABASES = {
         'PORT': 5432,
     }
 }
-
-# standard-2
-# DATABASES = {
-#     # 'default': {
-#     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#     #     'NAME': 'dfj22uqqfkqbam',
-#     #     'USER': 'u8ubp48c0q5bhm',
-#     #     'PASSWORD': 'pdfa73ca4ff5e08f37c37d656332e303aa4e5f150734fb8b2c0b3fa344590f4e8',
-#     #     'HOST': 'ec2-35-170-124-67.compute-1.amazonaws.com',
-#     #     'PORT':  5432,
-#     # },
-#     # 'default': {
-#     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#     #     'NAME': 'poktwatch',
-#     #     'USER': 'postgres',
-#     #     'PASSWORD': 'ok',
-#     #     'HOST': 'localhost',
-#     #     'PORT':  5432,
-#     # },
-#     'thunderhead': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'd2lmlbrc00agoq',
-#         'USER': 'jdddvjrpsrdwhx',
-#         'PASSWORD': 'a5fa1a86c1b64b2cb27eae3d5d812dada351f95d19aee1ba7fb0e5a3015d4763',
-#         'HOST': 'ec2-52-3-130-181.compute-1.amazonaws.com',
-#         'PORT':  5432,
-#     }
-# }
-
-
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
