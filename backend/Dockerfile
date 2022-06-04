@@ -50,9 +50,11 @@ RUN chown -R app /bin/pocket  && mkdir -p /home/app/.pocket/config
 
 RUN chown -R app /home/app/.pocket
 
-COPY ./test.sh /
-
 RUN pip install --upgrade pip
+
+RUN apk add libffi-dev
+
+RUN apk add git
 
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
@@ -60,6 +62,10 @@ RUN pip install -r requirements.txt
 COPY ./ /backend
 
 WORKDIR /backend
+
+RUN git clone https://github.com/pokt-foundation/pypocket
+RUN pip install wheel
+RUN pip install -e ./pypocket
 
 COPY ./entrypoint.sh /
 ENTRYPOINT ["sh", "/entrypoint.sh"]

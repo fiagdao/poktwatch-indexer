@@ -2,6 +2,7 @@ version: '3.7'
 
 services:
   pocket:
+    container_name: pocket
     cap_add:
     - ALL
     build: ./pocket/
@@ -12,45 +13,31 @@ services:
     volumes:
     - "./data/.pocket/:/root/.pocket/"
   db:
+    container_name: postgres
     image: postgres
+    ports:
+      - "5432:5432"
     env_file:
       - .env
     volumes:
       - ./data/db:/var/lib/postgresql/data
-    logging:
-      driver: none
-  django_gunicorn:
-    volumes:
-      - .:/app
-      - static:/static
-    env_file:
-      - .env
-    build:
-      context: .
-    ports:
-      - "8000:8000"
-    depends_on:
-      - db
-    logging:
-      driver: none
-  nginx:
-    build: ./nginx
-    volumes:
-      - static:/static
-      - "./letsencrypt:/etc/letsencrypt"
-    ports:
-      - "80:80"
-      - "443:443"
-    depends_on:
-      - django_gunicorn
   indexer:
+    container_name: indexer
     build: ./backend
     env_file:
       - .env
     depends_on:
       - pocket
       - db
-    restart: unless-stopped
+  postgres:
+    container_name: postgrest
+    image: postgrest/postgrest
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      - db
 volumes:
   static:
 

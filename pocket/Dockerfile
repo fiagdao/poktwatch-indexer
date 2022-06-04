@@ -20,7 +20,7 @@ RUN mkdir -p ${POCKET_PATH}
 
 WORKDIR $POCKET_PATH
 
-RUN git clone --branch staging https://github.com/dragondmoney/pocket-core.git ${POCKET_PATH}
+RUN git clone --branch RC-0.8.2 https://github.com/dragondmoney/pocket-core.git ${POCKET_PATH}
 RUN cd ${POCKET_PATH}
 RUN go build -tags cleveldb -o ${GOBIN}/bin/pocket ./app/cmd/pocket_core/main.go
 

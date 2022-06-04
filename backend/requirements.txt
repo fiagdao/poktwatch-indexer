@@ -4,3 +4,4 @@ python-dateutil>=2.5
 tqdm==4.62.3
 requests==2.26.0
 peewee==3.14.8
+pydantic

@@ -8,7 +8,6 @@ RUN pip3 install psycopg2
 
 USER postgres
 
-
 EXPOSE 5432
 
 VOLUME ["/etc/postgresql", "/var/log/postgresql", "/var/lib/postgresql"]
