@@ -7,12 +7,12 @@ services:
     - ALL
     build: ./pocket/
     ports:
+    - "26657:26657"
     - "8081:8081"
     - "26656:26656"
-    - "26657:26657"
     volumes:
     - "./data/.pocket/:/root/.pocket/"
-  db:
+  postgres:
     container_name: postgres
     image: postgres
     ports:
@@ -21,15 +21,16 @@ services:
       - .env
     volumes:
       - ./data/db:/var/lib/postgresql/data
+      - ./postgres:/docker-entrypoint-initdb.d
   indexer:
     container_name: indexer
-    build: ./backend
+    build: ./indexer
     env_file:
       - .env
     depends_on:
       - pocket
-      - db
-  postgres:
+      - postgres
+  postgrest:
     container_name: postgrest
     image: postgrest/postgrest
     ports:
@@ -37,7 +38,7 @@ services:
     env_file:
       - .env
     depends_on:
-      - db
+      - postgres
 volumes:
   static:
 

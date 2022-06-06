@@ -34,12 +34,12 @@ RUN addgroup --gid 1001 -S app
 RUN adduser --uid 1005 -S -G app app
 RUN chown -R app /bin/pocket  && mkdir -p /home/app/.pocket/config
 
-COPY config.json /home/app/.pocket/config/config.json
+COPY config.json ~/config/config.json
 
 RUN chown -R app /home/app/.pocket
 
 USER root
 WORKDIR /home/app
-COPY entrypoint.sh /
+COPY entrypoint_testnet.sh /
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint_testnet.sh"]

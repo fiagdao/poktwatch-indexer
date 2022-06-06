@@ -59,13 +59,14 @@ RUN apk add git
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY ./ /backend
-
-WORKDIR /backend
-
 RUN git clone https://github.com/pokt-foundation/pypocket
 RUN pip install wheel
 RUN pip install -e ./pypocket
 
+COPY ./ /backend
+
+WORKDIR /backend
+
 COPY ./entrypoint.sh /
+
 ENTRYPOINT ["sh", "/entrypoint.sh"]

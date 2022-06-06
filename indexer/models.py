@@ -1,7 +1,9 @@
 from peewee import *
 import os
-
-db = PostgresqlDatabase(user=os.environ.get('POSTGRES_USER'), database=os.environ.get('POSTGRES_NAME'), host="db", password=os.environ.get("POSTGRES_PASSWORD"), port="5432")
+import time
+# give time for db to warm up
+time.sleep(10)
+db = PostgresqlDatabase(user=os.environ.get('POSTGRES_USER'), database=os.environ.get('POSTGRES_NAME'), host="postgres", password=os.environ.get("POSTGRES_PASSWORD"), port="5432")
 
 class Block(Model):
     height = IntegerField(null=True)
@@ -52,6 +54,9 @@ class Transaction(Model):
 
 
 db.create_tables([Transaction, State,Pulse,Block])
+
+# POSTgREST setup
+db.execute_sql('grant select on all tables in schema public to {};'.format(os.environ.get("PGRST_DB_ANON_ROLE")))
 
 if Pulse.select().count() == 0:
 	Pulse.create(height=0, producer=0, relays=0, txs=0)
