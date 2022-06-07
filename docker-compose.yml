@@ -11,7 +11,7 @@ services:
     - "8081:8081"
     - "26656:26656"
     volumes:
-    - "./data/.pocket/:/root/.pocket/"
+    - "./data/.pocket/:/root/pocket/"
   postgres:
     container_name: postgres
     image: postgres
@@ -41,5 +41,3 @@ services:
       - postgres
 volumes:
   static:
-
-
