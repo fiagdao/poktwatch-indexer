@@ -1,4 +1,4 @@
-ARG GOLANG_IMAGE_VERSION=golang:1.16.2-alpine3.13
+ARG GOLANG_IMAGE_VERSION=golang:1.17.2-alpine3.13
 FROM ${GOLANG_IMAGE_VERSION} AS builder
 
 RUN apk -v --update --no-cache add \
@@ -40,6 +40,6 @@ RUN chown -R app /home/app/.pocket
 
 USER root
 WORKDIR /home/app
-COPY entrypoint_testnet.sh /
+COPY entrypoint.sh /
 
-ENTRYPOINT ["/entrypoint_testnet.sh"]
+ENTRYPOINT ["/entrypoint.sh"]

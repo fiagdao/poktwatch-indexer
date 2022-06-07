@@ -77,7 +77,13 @@ def flatten_tx(tx: Transaction, RelaysToTokensMultiplier: int, timestamp):
         value = tx.stdTx.msg.value.total_proofs * RelaysToTokensMultiplier
     else:
         value = 0
-    
+   
+    # few edge cases with 0 fee transaction
+    if len(tx.stdTx.fee) == 0:
+        fee = 0
+    else:
+        fee = tx.stdTx.fee[0].amount
+
     return {
         "height": tx.height,
         "hash": tx.hash_,
@@ -86,7 +92,7 @@ def flatten_tx(tx: Transaction, RelaysToTokensMultiplier: int, timestamp):
         "signer": tx.tx_result.signer,
         "recipient": tx.tx_result.recipient,
         "msg_type": tx.tx_result.message_type,
-        "fee": tx.stdTx.fee[0].amount,
+        "fee": fee,
         "memo": tx.stdTx.memo,
         "value": value,
         "timestamp": timestamp
@@ -169,7 +175,6 @@ def sync_block(height: int, retries: int):
                 "RelaysToTokensMultiplier", height=height)
 
             block_header = pokt_rpc.get_block(height).block.header
-
             timestamp = block_header.time
             proposer = block_header.proposer_address
 
