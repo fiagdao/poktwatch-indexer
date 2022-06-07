@@ -1,5 +1,5 @@
 from pokt import PoktRPCDataProvider
-import threading
+from threading import Thread
 import json
 import datetime
 
@@ -22,7 +22,7 @@ class Request(Thread):
         return self._return
 
 
-def get_block_txs(height: int, retries: int = 20, per_page: int = 500, pokt_rpc: PoktRPCDataProvider):
+def get_block_txs(height: int, pokt_rpc: PoktRPCDataProvider, retries: int = 20, per_page: int = 500):
     """ get all transaction of a block ordered by index (native)
 
     height - the height to query blocktxs for
@@ -59,7 +59,7 @@ def get_block_txs(height: int, retries: int = 20, per_page: int = 500, pokt_rpc:
     quit()
 
 
-def flatten_tx(tx: Transaction, RelaysToTokensMultiplier: int, timestamp):
+def flatten_tx(tx, RelaysToTokensMultiplier: int, timestamp):
     """ flatten a tx to the json requirements according to models.py
 
     tx - the Transaction to flatten

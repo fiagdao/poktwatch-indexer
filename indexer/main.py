@@ -14,7 +14,7 @@ import json
 import datetime
 import logging
 
-logging.basicConfig(format='%(filename)s: %(message)s',
+logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s',
                     handlers=[
                         logging.FileHandler("poktwatch.log"),
                         logging.StreamHandler()
@@ -87,7 +87,7 @@ def sync_block(height: int, retries: int):
 
     while retries > 0:
         try:
-            block_txs = get_block_txs(height)
+            block_txs = get_block_txs(height, pokt_rpc)
             relays = 0
             for tx in block_txs:
                 if tx.tx_result.message_type == "claim":
@@ -120,14 +120,12 @@ batch_size = int(sys.argv[1])
 state_height = State[1].height
 pokt_height = pokt_rpc.get_height()
 batch_height = pokt_height - (pokt_height % batch_size)
-
 for batch in range(state_height, batch_height, batch_size):
     """ for syncing early blocks on beefy machines, there is batching/threading functionality, which is a arg in the entrypoint.sh file. It is currently set to 1 for stability.
 
 
     """
-
-    logging.info("Current height {}".format(state_height))
+    logging.info("Current height {}".format(State[1].height))
 
     if quit_event.is_set():
         logging.info("Safely shutting down")
@@ -144,8 +142,8 @@ for batch in range(state_height, batch_height, batch_size):
             for thread in threads:
                 if thread.join() == False:
                     logging.error("Thread failed, quitting")
-
                     transaction.rollback()
+                    quit()
 
         except:
             transaction.rollback()
