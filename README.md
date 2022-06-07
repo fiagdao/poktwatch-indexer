@@ -22,9 +22,9 @@ If you do not want to run your own indexer, there is a free one available at htt
 
 ### PostgREST
 
-A (PostGREST)[https://postgrest.org/en/stable/] endpoint at 0.0.0.0:3000 is exposed.
+A [PostGREST](https://postgrest.org/en/stable/) endpoint at 0.0.0.0:3000 is exposed.
 
-You can connect this with other sites such as the (POKTwatch-frontend)[https://github.com/fiagdao/poktwatch-frontend], or create your own API's
+You can connect this with other sites such as the [POKTwatch-frontend](https://github.com/fiagdao/poktwatch-frontend), or create your own API's
 
 ### Postgres
 
