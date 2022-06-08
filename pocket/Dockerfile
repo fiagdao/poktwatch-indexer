@@ -30,13 +30,9 @@ COPY --from=builder /bin/pocket /bin/pocket
 
 RUN apk add --update --no-cache expect bash leveldb-dev
 
-RUN addgroup --gid 1001 -S app
-RUN adduser --uid 1005 -S -G app app
-RUN chown -R app /bin/pocket  && mkdir -p /home/app/.pocket/config
+RUN mkdir -p ~/.pocket/config
 
-COPY config.json ~/config/config.json
-
-RUN chown -R app /home/app/.pocket
+COPY config.json ~/.pocket/config/config.json
 
 USER root
 WORKDIR /home/app

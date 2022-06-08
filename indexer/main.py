@@ -3,6 +3,7 @@ from utils import *
 from dateutil.parser import parse
 from models import *
 from threading import Thread
+from tqdm import tqdm
 import sys
 import signal
 import threading
@@ -38,13 +39,29 @@ def update_mempool(retries: int):
         try:
             unconfirmed_txs = requests.get(
                 "http://pocket:26657/unconfirmed_txs?limit=10000").json()
+            logging.info("Got unconfirmed_txs. Number: {}".format(len(unconfirmed_txs["result"]["txs"])))
             RelaysToTokensMultiplier = pokt_rpc.get_param(
                 "RelaysToTokensMultiplier", height=0)
-            flat_txs = [flatten_pending_tx(
-                raw_tx, RelaysToTokensMultiplier) for raw_tx in unconfirmed_txs["result"]["txs"]]
+
+            threads = []
+            flat_txs = []
+
+            for raw_tx in unconfirmed_txs["result"]["txs"]:
+                x = Request(target=flatten_pending_tx, args=(raw_tx, RelaysToTokensMultiplier))
+                x.start()
+                threads.append(x)
+            
+            for thread in tqdm(threads):
+                res = thread.join()
+
+                flat_txs.append(res)
+
+            logging.info("Flattened txs")
             Transaction.delete().where(Transaction.height == -1).execute()
             Transaction.insert_many(flat_txs).execute()
+            
             return True
+        
         except Exception as e:
             logging.warning(
                 "Mempool failure. Error: {}. Retry-{}".format(e, retries))
@@ -156,7 +173,7 @@ for batch in range(state_height, batch_height, batch_size):
         transaction.commit()
 
 while True:
-    time.sleep(5)
+    time.sleep(10)
     state_height = State[1].height
     pokt_height = pokt_rpc.get_height()
     if state_height - 1 == pokt_height:

@@ -2,6 +2,7 @@ from pokt import PoktRPCDataProvider
 from threading import Thread
 import json
 import datetime
+import os
 
 # allows threading functions to have return values
 
@@ -112,25 +113,30 @@ def flatten_pending_tx(raw_tx: str, RelaysToTokensMultiplier: int):
 
     res = os.popen('pocket util decode-tx {} false true'.format(raw_tx)).read()
 
-    tx = json.loads(res, strict=False)
+    try:
+        tx = json.loads(res, strict=False)
 
-    if tx["type"] == "send":
-        value = tx["msg"]["amount"]
-    elif tx["type"] == "claim":
-        value = tx["msg"]["total_proofs"] * RelaysToTokensMultiplier
-    else:
-        value = 0
+        if tx["type"] == "send":
+            value = tx["msg"]["amount"]
+        elif tx["type"] == "claim":
+            value = tx["msg"]["total_proofs"] * RelaysToTokensMultiplier
+        else:
+            value = 0
 
-    return {
-        "height": -1,
-        "hash": tx["hash"].upper(),
-        "index": -1,
-        "result_code": -1,
-        "signer": tx["signer"].upper(),
-        "recipient": tx["receiver"].upper(),
-        "msg_type": tx["type"],
-        "fee": int(tx["fee"][:5]),
-        "memo": tx["memo"],
-        "value": value,
-        "timestamp": datetime.datetime.now()
-    }
+        return {
+            "height": -1,
+            "hash": tx["hash"].upper(),
+            "index": -1,
+            "result_code": -1,
+            "signer": tx["signer"].upper(),
+            "recipient": tx["receiver"].upper(),
+            "msg_type": tx["type"],
+            "fee": int(tx["fee"][:5]),
+            "memo": tx["memo"],
+            "value": value,
+            "timestamp": datetime.datetime.now()
+        }
+    except Exception as e:
+        logging.error("Raw_tx decoding error {}. Tx result {}".format(e, res))
+
+        quit()
