@@ -3,6 +3,7 @@ from threading import Thread
 import json
 import datetime
 import os
+import logging
 
 # allows threading functions to have return values
 
