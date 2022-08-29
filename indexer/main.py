@@ -109,12 +109,12 @@ def sync_block(height: int, retries: int):
             # sometimes pocket returns 0 txs immediatly after a new block, so this fixes that
             n = 10
             while n > 0:
-              if len(block_txs) == 0:
-                block_txs = get_block_txs(height, pokt_rpc)
-                time.sleep(5)
-                n -= 1
-            else:
-              break
+                if len(block_txs) == 0:
+                  block_txs = get_block_txs(height, pokt_rpc)
+                  time.sleep(5)
+                  n -= 1
+              else:
+                break
               
             relays = 0
             for tx in block_txs:
