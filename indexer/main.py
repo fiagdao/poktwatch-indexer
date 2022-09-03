@@ -113,8 +113,8 @@ def sync_block(height: int, retries: int):
                   block_txs = get_block_txs(height, pokt_rpc)
                   time.sleep(5)
                   n -= 1
-              else:
-                break
+                else:
+                  break
               
             relays = 0
             for tx in block_txs:
@@ -191,7 +191,7 @@ while True:
         with db.atomic() as transaction:
             try:
                 logging.info("Updating mempool")
-#                update_mempool(20)
+                update_mempool(20)
                 logging.info("Mempool has been successfully updated")
             except Exception as e:
                 logging.error("Mempool update has failed {}".format(e))
