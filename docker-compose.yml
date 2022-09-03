@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   pocket:
-    container_name: pocket
+    container_name: pocket 
     cap_add:
     - ALL
     build: ./pocket/

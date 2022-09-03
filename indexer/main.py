@@ -189,7 +189,7 @@ while True:
         with db.atomic() as transaction:
             try:
                 logging.info("Updating mempool")
-                update_mempool(20)
+#                update_mempool(20)
                 logging.info("Mempool has been successfully updated")
             except Exception as e:
                 logging.error("Mempool update has failed {}".format(e))
@@ -205,9 +205,9 @@ while True:
             quit()
         with db.atomic() as transaction:  # Opens new transaction.
             try:
-                sync_block(block, 20)
+                if not sync_block(block, 20):
+                    logging.critical("Failed to sync block {}".format(block))
                 update_pulse(block, 20)
-                update_mempool(20)
             except Exception as e:
                 logging.error("Failure to sync block: {}".format(e))
                 transaction.rollback()
